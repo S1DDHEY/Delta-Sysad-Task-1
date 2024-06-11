@@ -1,0 +1,4 @@
+Name Domain Mentee_Capacity
+guru sysad 15
+alice web 10
+bob app 20
