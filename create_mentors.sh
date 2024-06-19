@@ -47,8 +47,9 @@ sudo tail -n +2 "$input_file" | while IFS=' ' read -r name domain mentee_capacit
     sudo mkdir -p "$user_dir/$name/submittedTasks/task2"
     sudo mkdir -p "$user_dir/$name/submittedTasks/task3"
 
-    echo "alias submitTask='bash /home/submit_task.sh'" >> /home/users/core/mentors/$user_dir/$name/.bashrc
-    source /home/users/core/mentors/$user_dir/$name/.bashrc
+    # Add alias submitTask to each mentors's .bashrc file
+    echo "alias submitTask='bash /home/submit_task.sh'" >> "$user_dir/$name/.bashrc"
+    source "$user_dir/$name/.bashrc"
 
     echo "User '$name' created with home directory '$user_dir/$name'."
 done < "$input_file"
