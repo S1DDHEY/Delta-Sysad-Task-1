@@ -1,20 +1,21 @@
 #!/bin/bash
 
-#Function to display usage instructions
+# Function to display usage instructions
 usage() {
-    echo "Usage: $0 <mentee_username> <domain1> <domain2> <domain3>"
+    echo "Usage: $0 <mentee_username> <roll_number> <domain1> <domain2> <domain3>"
     echo "Domains: web, app, sysad"
     exit 1
 }
 
-# Check of atleast 2 arguments are provided (mentee_roll_number and atleast one domain)
-if [ "$#" -lt 2 ]; then
+# Check if at least 3 arguments are provided (mentee_username, roll_number, and at least one domain)
+if [ "$#" -lt 3 ]; then
     usage
 fi
 
-# Assign the first argument to the mentee_roll_number variable and shift the rest to the domains array
+# Assign the first two arguments to the mentee_username and roll_number variables, and shift the rest to the domains array
 mentee_username=$1
-shift
+roll_number=$2
+shift 2
 domains=("$@")
 
 # Define valid domains
@@ -23,8 +24,8 @@ valid_domain=("web" "app" "sysad")
 # Check if provided domains are valid
 for domain in "${domains[@]}"; do
     if [[ ! " ${valid_domain[*]} " =~ " ${domain} " ]]; then
-	echo "Invalid domain: $domain"
-	usage
+        echo "Invalid domain: $domain"
+        usage
     fi
 done
 
@@ -41,8 +42,8 @@ for domain in "${domains[@]}"; do
     echo "$domain" >> "$domain_pref_file"
 done
 
-# Add the roll number and domains to the core's mentees_domain.txt file
-echo "$mentee_username: ${domains[*]}" >> "$core_mentees_file"
+# Add the username, roll number, and domains to the core's mentees_domain.txt file
+echo "$mentee_username $roll_number ${domains[*]}" >> "$core_mentees_file"
 
 # Create directories for each domain inside the mentee's home directory
 for domain in "${domains[@]}"; do
